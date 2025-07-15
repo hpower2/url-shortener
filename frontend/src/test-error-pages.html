@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Pages Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 10px 10px 0;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .test-link:hover {
+            background: #2563eb;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+        .backend-url {
+            background: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #3b82f6;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔗 URL Shortener Error Pages Test</h1>
+    
+    <div class="test-section">
+        <h2>📱 Frontend Error Pages</h2>
+        <p class="description">
+            These are the new React error pages that handle backend redirects:
+        </p>
+        
+        <a href="/error/expired?code=abc123" class="test-link">
+            ⏰ Expired Link (410)
+        </a>
+        
+        <a href="/error/inactive?code=def456" class="test-link">
+            🚫 Inactive Link (410)
+        </a>
+        
+        <a href="/error/not-found?code=xyz789" class="test-link">
+            🔍 Not Found Link (404)
+        </a>
+        
+        <a href="/error/server-error?code=err500" class="test-link">
+            ⚠️ Server Error (500)
+        </a>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔄 Backend Redirect Flow</h2>
+        <p class="description">
+            When users access short URLs, the backend will redirect to these frontend pages:
+        </p>
+        
+        <div class="backend-url">
+            <strong>Backend Logic:</strong><br>
+            https://s.iafri.com/abc123 → https://short.irvineafri.com/error/expired?code=abc123<br>
+            https://s.iafri.com/def456 → https://short.irvineafri.com/error/inactive?code=def456<br>
+            https://s.iafri.com/xyz789 → https://short.irvineafri.com/error/not-found?code=xyz789
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>✨ Features</h2>
+        <ul>
+            <li>🎨 Beautiful, consistent design using Tailwind CSS</li>
+            <li>📱 Fully responsive for all devices</li>
+            <li>🔗 Shows the attempted short code to users</li>
+            <li>🎯 Color-coded by error type (orange=expired, red=inactive, purple=not-found)</li>
+            <li>🏠 Action buttons to create new links or view dashboard</li>
+            <li>💡 Helpful explanations for each error type</li>
+            <li>⚡ Smooth animations and hover effects</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>🧪 Testing Instructions</h2>
+        <ol>
+            <li>Start your React development server: <code>npm run dev</code></li>
+            <li>Click the test links above to see each error page</li>
+            <li>Notice how each page shows the short code from the URL parameter</li>
+            <li>Test the action buttons (Create New Link, View My Links)</li>
+            <li>Try different screen sizes to test responsiveness</li>
+        </ol>
+    </div>
+</body>
+</html> 

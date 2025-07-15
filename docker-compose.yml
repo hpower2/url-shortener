@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: url_shortener_backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "0.0.0.0:15522:8080"
+    networks:
+      - url_shortener_network
+
+  # Frontend with Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: url_shortener_frontend
+    ports:
+      - "3000:80"
+    networks:
+      - url_shortener_network
+    depends_on:
+      - backend
+
+networks:
+  url_shortener_network:
+    driver: bridge

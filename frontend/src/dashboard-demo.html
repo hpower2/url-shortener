@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dashboard - URL Status Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9fafb;
+        }
+        .demo-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .url-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .url-info {
+            flex: 1;
+        }
+        .url-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .url-link {
+            font-weight: 500;
+            color: #374151;
+        }
+        .url-link.expired {
+            color: #9ca3af;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .badge.expired {
+            background-color: #fed7aa;
+            color: #c2410c;
+        }
+        .badge.expiring-soon {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+        .badge.inactive {
+            background-color: #fecaca;
+            color: #dc2626;
+        }
+        .url-meta {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        .url-meta.expired {
+            color: #ea580c;
+            font-weight: 500;
+        }
+        .url-meta.expiring-soon {
+            color: #d97706;
+            font-weight: 500;
+        }
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+        .icon.expired {
+            color: #f97316;
+        }
+        .icon.expiring-soon {
+            color: #f59e0b;
+        }
+        .icon.inactive {
+            color: #ef4444;
+        }
+        .icon.active {
+            color: #9ca3af;
+        }
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            padding: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #9ca3af;
+        }
+        .action-btn:hover {
+            background-color: #f3f4f6;
+        }
+        .features {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .features h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+        .features ul {
+            color: #0c4a6e;
+            line-height: 1.6;
+        }
+        .features li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔗 Enhanced Dashboard - URL Status Indicators</h1>
+    
+    <div class="features">
+        <h3>✨ New Features Added</h3>
+        <ul>
+            <li>🟠 <strong>Expired URLs</strong>: Clear orange badges and styling for URLs past their expiration date</li>
+            <li>🟡 <strong>Expiring Soon</strong>: Yellow warning badges for URLs expiring within 7 days</li>
+            <li>🔴 <strong>Inactive URLs</strong>: Red badges for manually deactivated URLs</li>
+            <li>📅 <strong>Smart Date Display</strong>: Shows "X days ago" for expired and "X days left" for expiring</li>
+            <li>🎨 <strong>Color-Coded Icons</strong>: Link icons change color based on status</li>
+            <li>⚡ <strong>Real-time Status</strong>: Automatically calculates expiration based on current date</li>
+        </ul>
+    </div>
+
+    <div class="demo-section">
+        <h2>📊 URL Status Examples</h2>
+        
+        <!-- Active URL -->
+        <div class="url-item">
+            <div class="url-info">
+                <div class="url-title">
+                    <svg class="icon active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    <span class="url-link">https://s.iafri.com/abc123</span>
+                </div>
+                <div class="url-meta">
+                    156 clicks • Created Dec 15, 2024 • Expires Jan 15, 2025
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action-btn">📋</button>
+                <button class="action-btn">📊</button>
+                <button class="action-btn">✏️</button>
+            </div>
+        </div>
+
+        <!-- Expiring Soon URL -->
+        <div class="url-item">
+            <div class="url-info">
+                <div class="url-title">
+                    <svg class="icon expiring-soon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    <span class="url-link">https://s.iafri.com/def456</span>
+                    <span class="badge expiring-soon">
+                        🕐 Expiring Soon
+                    </span>
+                </div>
+                <div class="url-meta expiring-soon">
+                    89 clicks • Created Dec 1, 2024 • Expires Dec 30, 2024 (3 days left)
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action-btn">📋</button>
+                <button class="action-btn">📊</button>
+                <button class="action-btn">✏️</button>
+            </div>
+        </div>
+
+        <!-- Expired URL -->
+        <div class="url-item">
+            <div class="url-info">
+                <div class="url-title">
+                    <svg class="icon expired" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    <span class="url-link expired">https://s.iafri.com/ghi789</span>
+                    <span class="badge expired">
+                        🕐 Expired
+                    </span>
+                </div>
+                <div class="url-meta expired">
+                    234 clicks • Created Nov 1, 2024 • Expired Dec 1, 2024 (26 days ago)
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action-btn">📋</button>
+                <button class="action-btn">📊</button>
+                <button class="action-btn">✏️</button>
+            </div>
+        </div>
+
+        <!-- Inactive URL -->
+        <div class="url-item">
+            <div class="url-info">
+                <div class="url-title">
+                    <svg class="icon inactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    <span class="url-link expired">https://s.iafri.com/jkl012</span>
+                    <span class="badge inactive">
+                        Inactive
+                    </span>
+                </div>
+                <div class="url-meta">
+                    67 clicks • Created Nov 15, 2024 • Expires Jan 15, 2025
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action-btn">📋</button>
+                <button class="action-btn">📊</button>
+                <button class="action-btn">✏️</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>🎯 Status Logic</h2>
+        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px;">
+            <div><strong>Active:</strong> is_active = true && (no expiration || expires_at > now)</div>
+            <div><strong>Expiring Soon:</strong> is_active = true && expires_at <= now + 7 days</div>
+            <div><strong>Expired:</strong> is_active = true && expires_at < now</div>
+            <div><strong>Inactive:</strong> is_active = false</div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>🚀 Implementation Details</h2>
+        <ul>
+            <li>✅ Added helper functions: <code>isUrlExpired()</code>, <code>isUrlExpiringSoon()</code>, <code>getUrlStatus()</code></li>
+            <li>✅ Enhanced URL badges with icons and color coding</li>
+            <li>✅ Smart expiration date display with countdown/elapsed time</li>
+            <li>✅ Color-coded link icons based on status</li>
+            <li>✅ Real-time calculation based on current date</li>
+            <li>✅ Responsive design that works on all devices</li>
+        </ul>
+    </div>
+</body>
+</html> 
