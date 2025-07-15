@@ -43,6 +43,12 @@ export default function Dashboard() {
         expires_at: ''
     })
 
+    // QR Code modal state
+    const [showQRModal, setShowQRModal] = useState(false)
+    const [qrCodeUrl, setQrCodeUrl] = useState<string>('')
+    const [qrCodeShortCode, setQrCodeShortCode] = useState<string>('')
+    const [qrLoading, setQrLoading] = useState(false)
+
     useEffect(() => {
         fetchUrls()
 
@@ -158,21 +164,42 @@ export default function Dashboard() {
         toast.success('Copied to clipboard!')
     }
 
-    const downloadQR = async (shortCode: string) => {
+    const showQRCode = async (shortCode: string) => {
+        setQrLoading(true)
+        setQrCodeShortCode(shortCode)
+        setShowQRModal(true)
+        
         try {
             const response = await urlsAPI.getQRCode(shortCode)
             const blob = new Blob([response.data], { type: 'image/png' })
             const url = window.URL.createObjectURL(blob)
+            setQrCodeUrl(url)
+        } catch (error) {
+            toast.error('Failed to load QR code')
+            setShowQRModal(false)
+        } finally {
+            setQrLoading(false)
+        }
+    }
+
+    const closeQRModal = () => {
+        setShowQRModal(false)
+        if (qrCodeUrl) {
+            window.URL.revokeObjectURL(qrCodeUrl)
+            setQrCodeUrl('')
+        }
+        setQrCodeShortCode('')
+    }
+
+    const downloadQRFromModal = () => {
+        if (qrCodeUrl && qrCodeShortCode) {
             const a = document.createElement('a')
-            a.href = url
-            a.download = `qr-${shortCode}.png`
+            a.href = qrCodeUrl
+            a.download = `qr-${qrCodeShortCode}.png`
             document.body.appendChild(a)
             a.click()
-            window.URL.revokeObjectURL(url)
             document.body.removeChild(a)
             toast.success('QR code downloaded!')
-        } catch (error) {
-            toast.error('Failed to download QR code')
         }
     }
 
@@ -389,9 +416,9 @@ export default function Dashboard() {
                                                 <ClipboardIcon className="h-5 w-5" />
                                             </button>
                                             <button
-                                                onClick={() => downloadQR(url.short_code)}
+                                                onClick={() => showQRCode(url.short_code)}
                                                 className="p-2 text-gray-400 hover:text-gray-600"
-                                                title="Download QR Code"
+                                                title="Show QR Code"
                                             >
                                                 <QrCodeIcon className="h-5 w-5" />
                                             </button>
@@ -496,6 +523,63 @@ export default function Dashboard() {
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                )}
+
+                {/* QR Code Modal */}
+                {showQRModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-lg font-medium text-gray-900">QR Code</h3>
+                                <button
+                                    onClick={closeQRModal}
+                                    className="text-gray-400 hover:text-gray-600"
+                                >
+                                    <XMarkIcon className="h-6 w-6" />
+                                </button>
+                            </div>
+
+                            <div className="text-center">
+                                {qrLoading ? (
+                                    <div className="flex justify-center items-center h-64">
+                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                                    </div>
+                                ) : qrCodeUrl ? (
+                                    <div className="space-y-4">
+                                        <div className="bg-white p-4 rounded-lg border-2 border-gray-200 inline-block">
+                                            <img 
+                                                src={qrCodeUrl} 
+                                                alt={`QR Code for ${qrCodeShortCode}`}
+                                                className="w-48 h-48 object-contain"
+                                            />
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                            <p className="font-medium">Short URL:</p>
+                                            <p className="break-all">{getShortUrl(qrCodeShortCode)}</p>
+                                        </div>
+                                        <div className="flex space-x-3">
+                                            <button
+                                                onClick={downloadQRFromModal}
+                                                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                                            >
+                                                Download QR Code
+                                            </button>
+                                            <button
+                                                onClick={() => copyToClipboard(getShortUrl(qrCodeShortCode))}
+                                                className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
+                                            >
+                                                Copy URL
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="text-gray-500 py-8">
+                                        Failed to load QR code
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
